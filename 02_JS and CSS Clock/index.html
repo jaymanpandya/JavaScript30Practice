@@ -62,13 +62,37 @@
       background:black;
       position: absolute;
       top:50%;
+      transform: rotate(90deg);
+      transform-origin: 100%;
+      transition: all .07s ease-in-out;
+      transition-timing-function: cubic-bezier(0,2.61,.17,1);
     }
 
   </style>
 
   <script>
+  const getSecondsHand = document.querySelector(`.second-hand`);
+  const getMinutesHand = document.querySelector(`.min-hand`);
+  const getHoursHand = document.querySelector(`.hour-hand`);
 
+    function getCurrentDate() {
+      const currentTime = new Date();
+      const seconds = currentTime.getSeconds();
+      const minute = currentTime.getMinutes();
+      const hour = currentTime.getHours();
 
+      //Determine a number for degrees to rotate clock hands
+      const secondsDegreesRotation = ((seconds / 60) * 360) + 90;
+      const minutesDegreesRotation = ((minute / 60) * 360) + 90;
+      const hoursDegreesRotation = ((hour / 12) * 360) + 90;
+
+      //Update position of hands depending on current time
+      getSecondsHand.style.transform = `rotate(${secondsDegreesRotation}deg)`;
+      getMinutesHand.style.transform = `rotate(${minutesDegreesRotation}deg)`;
+      getHoursHand.style.transform = `rotate(${hoursDegreesRotation}deg)`;
+    }
+
+    setInterval(getCurrentDate, 1000);
   </script>
 </body>
 </html>
